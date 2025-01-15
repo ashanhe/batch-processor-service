@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bull';
 import { CsvModule } from './csv/csv.module';
+import { ExportModule } from './export/export.module';
 
 
 @Module({
@@ -25,6 +26,7 @@ import { CsvModule } from './csv/csv.module';
       },
     }),
     CsvModule,
+    ExportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
