@@ -19,7 +19,7 @@ export class ExportService {
 
   async findVehiclesByAge(age: number): Promise<Vehicle[]> {
     const currentYear = new Date().getFullYear();
-    const startYear = currentYear - age;
+    const startYear = currentYear - age;  
     const endYear = startYear + 1;
 
     return this.vehicleRepository.find({

@@ -4,10 +4,14 @@ import * as path from 'path';
 import { ExportService } from './export.service';
 import { Vehicle } from '../csv/entities/vehicle.entity';
 import * as csvWriter from 'csv-writer';
+import { NotificationsGateway } from '../notifications/notifications.gateway';
 
 @Processor('export-processing')
 export class ExportProcessor {
-  constructor(private readonly exportService: ExportService) {}
+  constructor(
+    private readonly exportService: ExportService,
+    private readonly notificationsGateway: NotificationsGateway,
+  ) {}
 
   @Process('process-export')
   async handleExport(job: Job) {
@@ -19,9 +23,8 @@ export class ExportProcessor {
       __dirname,
       '../../exports',
       `vehicles_export.csv`,
-    //   `vehicles_age_${age_of_vehicle}csv`,
     );
-    console.log('Exporting vehicles to CSV:', filePath);
+    // console.log('Exporting vehicles to CSV:', filePath);
     const writer = csvWriter.createObjectCsvWriter({
       path: filePath,
       header: [
@@ -39,5 +42,8 @@ export class ExportProcessor {
 
     await writer.writeRecords(vehicles);
     console.log('CSV file created:', filePath);
+
+    // Send notification to the client (websockets)
+    this.notificationsGateway.sendNotification('File exported successfully');
   }
 }
