@@ -3,6 +3,7 @@ import { Server } from 'socket.io';
 
 @WebSocketGateway({ cors: { origin: '*' } }) // Enable CORS for WebSocket
 export class NotificationsGateway {
+
   @WebSocketServer()
   server: Server;
 

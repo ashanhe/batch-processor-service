@@ -47,7 +47,7 @@ export class CsvProcessor {
         .on('error', (error) => {
           console.error('Error processing CSV:', error);
           this.notificationsGateway.sendNotification(
-            'Error saving CSV data',
+            'File uploaded successfully',
           );
           reject(error);
         });

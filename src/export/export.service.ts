@@ -8,6 +8,7 @@ import { VehicleCreateDTO } from '../csv/entities/dto/create-vehicle.input';
 
 @Injectable()
 export class ExportService {
+
   constructor(
     @InjectRepository(Vehicle) private vehicleRepository: Repository<Vehicle>,
     @InjectQueue('export-processing') private readonly queue: Queue
