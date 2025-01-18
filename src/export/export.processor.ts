@@ -24,7 +24,7 @@ export class ExportProcessor {
       '../../exports',
       `vehicles_export.csv`,
     );
-    console.log('Exporting vehicles to CSV:', filePath);
+    // console.log('Exporting vehicles to CSV:', filePath);
     const writer = csvWriter.createObjectCsvWriter({
       path: filePath,
       header: [
@@ -43,9 +43,8 @@ export class ExportProcessor {
     await writer.writeRecords(vehicles);
     console.log('CSV file created:', filePath);
 
-    // Send notification to the client
-    const notificationMessage = 'File exported successfully';
-    console.log('Sending notification:', notificationMessage);
-    this.notificationsGateway.sendNotification(notificationMessage);
+    // Send notification to the client (websockets)
+    this.notificationsGateway.sendNotification('File exported successfully');
+
   }
 }

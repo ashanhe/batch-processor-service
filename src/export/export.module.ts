@@ -6,6 +6,7 @@ import { ExportProcessor } from './export.processor';
 import { ExportController } from './export.controller';
 import { Vehicle } from '../csv/entities/vehicle.entity';
 import { NotificationsModule } from '../notifications/notifications.module';
+import { NotificationsGateway } from 'src/notifications/notifications.gateway';
 
 @Module({
   imports: [
@@ -14,6 +15,6 @@ import { NotificationsModule } from '../notifications/notifications.module';
     NotificationsModule
   ],
   controllers: [ExportController],
-  providers: [ExportService, ExportProcessor, NotificationsModule],
+  providers: [ExportService, ExportProcessor, NotificationsModule, NotificationsGateway],
 })
 export class ExportModule {}

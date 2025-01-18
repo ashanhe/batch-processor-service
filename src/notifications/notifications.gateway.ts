@@ -8,9 +8,14 @@ export class NotificationsGateway {
   server: Server;
 
   sendNotification(message: string) {
+    if (!message || typeof message !== 'string') {
+      console.error('Invalid message:', message);
+      return;
+    }
     this.server.emit('notification', message);
   }
-
+  
+  
   @SubscribeMessage('message')
   handleMessage(@MessageBody() message: string): void {
     console.log('Message received:', message);
