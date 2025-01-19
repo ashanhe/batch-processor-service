@@ -1,9 +1,6 @@
 import { Column} from 'typeorm';
 
-@InputType()
 export class VehicleCreateDTO {
-  //   @Column()
-  //   id: string;
 
   @Column()
   first_name: string;
@@ -27,14 +24,7 @@ export class VehicleCreateDTO {
   manufactured_date: Date;
 
   //{ nullable: true }
-  @Field({ nullable: true })
+  @Column({ nullable: true })
   age_of_vehicle: number;
-}
-function InputType(): (target: typeof VehicleCreateDTO) => void | typeof VehicleCreateDTO {
-  throw new Error('Function not implemented.');
-}
-
-function Field(arg0: { nullable: boolean; }): (target: VehicleCreateDTO, propertyKey: "age_of_vehicle") => void {
-  throw new Error('Function not implemented.');
 }
 

@@ -3,7 +3,6 @@ import { Job } from 'bull';
 import * as fs from 'fs';
 import * as csvParser from 'csv-parser';
 import { CsvService } from './csv.service';
-
 @Processor('csv-processing')
 export class CsvProcessor {
   constructor(private readonly csvService: CsvService) {}
@@ -28,12 +27,14 @@ export class CsvProcessor {
             resolve(results);
           } catch (error) {
             console.error('Error saving CSV data:', error);
+
             reject(error);
           }
           resolve(results);
         })
         .on('error', (error) => {
           console.error('Error processing CSV:', error);
+
           reject(error);
         });
     });

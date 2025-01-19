@@ -5,12 +5,14 @@ import { Between, Repository } from 'typeorm';
 import { VehicleCreateDTO } from './entities/dto/create-vehicle.input';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
+import { NotificationGateway } from '../notifications/notification.gateway';
 
 @Injectable()
 export class CsvService {
   constructor(
     @InjectRepository(Vehicle) private vehicleRepository: Repository<Vehicle>,
-    @InjectQueue('csv-processing') private readonly queue: Queue
+    @InjectQueue('csv-processing') private readonly queue: Queue,
+    private readonly notificationGateway: NotificationGateway,
   ) {}
 
   // // Calculate the age of the vehicle
@@ -35,11 +37,11 @@ export class CsvService {
     return this.vehicleRepository.save(vehi);
   }
 
-  //CSV
+  //CSV with notification
   async addCsvJob(filePath: string) {
     await this.queue.add('process-csv', { filePath });
+    this.notificationGateway.sendNotification('upload', { message: 'CSV upload job added' });
   }
-
 
   //Export by age
   async findByAge(age: number): Promise<Vehicle[]> {
@@ -54,4 +56,5 @@ export class CsvService {
       },
     });
   }
+
 }
