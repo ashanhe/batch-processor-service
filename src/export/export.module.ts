@@ -5,16 +5,15 @@ import { ExportService } from './export.service';
 import { ExportProcessor } from './export.processor';
 import { ExportController } from './export.controller';
 import { Vehicle } from '../csv/entities/vehicle.entity';
-import { NotificationsModule } from '../notifications/notifications.module';
-import { NotificationsGateway } from 'src/notifications/notifications.gateway';
+import { NotificationModule } from '../notifications/notification.module';
 
 @Module({
   imports: [
     BullModule.registerQueue({ name: 'export-processing' }),
     TypeOrmModule.forFeature([Vehicle]),
-    NotificationsModule
+    NotificationModule
   ],
   controllers: [ExportController],
-  providers: [ExportService, ExportProcessor, NotificationsModule, NotificationsGateway],
+  providers: [ExportService, ExportProcessor]
 })
 export class ExportModule {}

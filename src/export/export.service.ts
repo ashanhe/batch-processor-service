@@ -7,12 +7,15 @@ import { Queue } from 'bull';
 import { VehicleCreateDTO } from '../csv/entities/dto/create-vehicle.input';
 import * as path from 'path';
 import * as csvWriter from 'csv-writer';
+import { NotificationGateway } from '../notifications/notification.gateway';
+
 
 @Injectable()
 export class ExportService {
   constructor(
     @InjectRepository(Vehicle) private vehicleRepository: Repository<Vehicle>,
-    @InjectQueue('export-processing') private readonly queue: Queue
+    @InjectQueue('export-processing') private readonly queue: Queue,
+    private readonly notificationGateway: NotificationGateway,
   ) {}
 
   async addExportJob(vehicleCreateDTO: VehicleCreateDTO): Promise<string> {
@@ -41,6 +44,8 @@ export class ExportService {
 
     await writer.writeRecords(vehicles);
     console.log('CSV file created:', filePath);
+    this.notificationGateway.sendNotification('export', { message: 'CSV export job completed' });
+
 
     return filePath;
   }

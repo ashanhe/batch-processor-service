@@ -5,7 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BullModule } from '@nestjs/bull';
 import { CsvModule } from './csv/csv.module';
 import { ExportModule } from './export/export.module';
-import { NotificationsModule } from './notifications/notifications.module';
+import { NotificationGateway } from './notifications/notification.gateway';
 
 
 @Module({
@@ -28,9 +28,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     }),
     CsvModule,
     ExportModule,
-    NotificationsModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, NotificationGateway],
 })
 export class AppModule {}

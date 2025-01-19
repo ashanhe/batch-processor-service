@@ -4,13 +4,10 @@ import * as path from 'path';
 import { ExportService } from './export.service';
 import { Vehicle } from '../csv/entities/vehicle.entity';
 import * as csvWriter from 'csv-writer';
-import { NotificationsGateway } from '../notifications/notifications.gateway';
-
 @Processor('export-processing')
 export class ExportProcessor {
   constructor(
     private readonly exportService: ExportService,
-    private readonly notificationsGateway: NotificationsGateway,
   ) {}
 
   @Process('process-export')
@@ -43,8 +40,6 @@ export class ExportProcessor {
     await writer.writeRecords(vehicles);
     console.log('CSV file created:', filePath);
 
-    // Send notification to the client (websockets)
-    this.notificationsGateway.sendNotification('File exported successfully');
 
   }
 }

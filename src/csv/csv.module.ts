@@ -5,16 +5,15 @@ import { CsvProcessor } from './csv.processor';
 import { CsvController } from './csv.controller';
 import { Vehicle } from './entities/vehicle.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NotificationsModule } from 'src/notifications/notifications.module';
-
+import { NotificationModule } from '../notifications/notification.module';
 @Module({
   imports: [
     BullModule.registerQueue({ name: 'csv-processing' }),
     TypeOrmModule.forFeature([Vehicle]),
-    NotificationsModule
+    NotificationModule,
   ],
   controllers: [CsvController],
   providers: [CsvService, CsvProcessor],
-  exports: [CsvService],
+  exports: [CsvService]
 })
 export class CsvModule {}
